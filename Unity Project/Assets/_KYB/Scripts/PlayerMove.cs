@@ -14,7 +14,7 @@ public class PlayerMove : MonoBehaviour
     public float speed = 10.0f;
     private Rigidbody playerRigidbody;
 
-    public Vector3 margin;  //뷰포트 좌표는 (0, 0) ~ (1, 1) 사이의 값을 사용한다.
+    public Vector2 margin;  //뷰포트 좌표는 (0, 0) ~ (1, 1) 사이의 값을 사용한다.
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +33,7 @@ public class PlayerMove : MonoBehaviour
         //이동 처리
         //transform.Translate(h * speed * Time.deltaTime, 0, v * speed * Time.deltaTime);
         //아래 방법도 가능 (덧셈일때는 크게 상관없지만 뺄셈을 써야 할 경우 아래 방법이 더 좋음)
-        // Vector3 dir = Vector3.right * h + Vector3.forward * v;
+       // Vector3 dir = Vector3.right * h + Vector3.forward * v;
         Vector3 dir = new Vector3(h, 0, v);
         //벡터의 정규화
         //dir.Normalize();
@@ -52,11 +52,11 @@ public class PlayerMove : MonoBehaviour
         //p = p0 + vt;
         //위치 = 현재위치 + (방향 * 시간)
         //transform.position = transform.position + dir * speed * Time.deltaTime;
-        //transform.position += dir * speed * Time.deltaTime;
+        transform.position += dir * speed * Time.deltaTime;
 
 
         //1. 화면밖 공간에 큐브 4개를 만들어 배치하면 충돌체 때문에 밖으로 벗어나지 못한다. - 리지드 바디가 포함되어야 충돌처리가 가능함
-        playerRigidbody.velocity = new Vector3(h * speed, 0, v * speed);
+        //playerRigidbody.velocity = new Vector3(h * speed, 0, v * speed);
 
         // 1 * 10 * 0.016 = 0.16
 
@@ -78,7 +78,7 @@ public class PlayerMove : MonoBehaviour
 
         //transform.position = pos;
 
-        MoveInScreen();
+         MoveInScreen();
     }
 
     void MoveInScreen()
@@ -88,9 +88,12 @@ public class PlayerMove : MonoBehaviour
         //스크린 좌표 - 모니터 해상도 픽셀 단위
         //UV좌표 - 화면 텍스트, 2D 이미지를 표시하기 위한 좌표계로 텍스쳐 좌표계라고도 한다
         //좌상단(0, 0), 우측하단(1, 1)
+        
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+
         pos.x = Mathf.Clamp(pos.x, 0.0f + margin.x, 1.0f - margin.x);
-        pos.z = Mathf.Clamp(pos.z, 0.0f + margin.z, 1.0f - margin.z);
+        pos.y = Mathf.Clamp(pos.y, 0.0f + margin.y, 1.0f - margin.y);
+
         transform.position = Camera.main.ViewportToWorldPoint(pos);
 
         /*
