@@ -13,14 +13,25 @@ public class Enemy : MonoBehaviour
     //충돌처리 - 리지드바디 사용하자
 
     //유니티 어트리뷰트[] 공부하기
-
+    public float time;
+    public GameObject enemyBullet;
     public float speed = 5.0f;      //에너미 이동속도
+
+    float timer;
+    float coolTimer = 1.0f;
 
     // Update is called once per frame
     void Update()
     {
         //아래로 이동해라
         EnemyMove();
+        timer += Time.deltaTime;
+        if (timer > coolTimer)
+        {
+            timer = 0;
+            GameObject bullet = Instantiate(enemyBullet);
+            bullet.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+        }
     }
 
     void EnemyMove()
@@ -30,10 +41,15 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //자기 자신도 없애고
-        //충돌된 오브젝트도 날린다
+        if (collision.gameObject.tag == "Player")
+        {
+            Destroy(gameObject);
+            Destroy(collision.gameObject);
+        }
+    }
+    private void OnBecameInvisible()
+    {
         Destroy(gameObject);
-        Destroy(collision.gameObject);
     }
 
 }

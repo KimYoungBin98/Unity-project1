@@ -22,7 +22,11 @@ public class Bullet : MonoBehaviour
     //카메라 화면밖으로 나가서 보이지 않게 되면
     //호출되는 이벤트 함수
     //유니티 내부에는  On으로 시작되는 함수는 전부 이벤트 함수들이다
-
+    private void OnCollisionEnter(Collision collision)
+    {
+            Destroy(gameObject);
+            Destroy(collision.gameObject);
+    }
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
