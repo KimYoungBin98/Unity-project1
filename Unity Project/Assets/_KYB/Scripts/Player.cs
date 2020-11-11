@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
         {
             if (!roketOn)
             {
+
                 RoketLeft.SetActive(true);
                 RoketRight.SetActive(true);
                 roketOn = true;

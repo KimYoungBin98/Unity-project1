@@ -28,6 +28,11 @@ public class RoketFire : MonoBehaviour
             timer = 0;
             GameObject bullet = Instantiate(bulletFactory);
             bullet.transform.position = firePoint.transform.position;
+
+            //GameObject[] bullet = new GameObject[2];
+
+            //자식의 갯수를 가져올 수 있기 때문에 효율적이다.
+            //GameObject[] bullet = new GameObject[firePoint.transform.childCount];
         }
     }
 }
