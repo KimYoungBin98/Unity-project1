@@ -8,27 +8,34 @@ public class EnemyBullet : MonoBehaviour
     public GameObject playerPos;
     public GameObject enemy;
     Vector3 dir;
-    private void Awake()
-    {
 
+    public void initBullet()
+    {
         playerPos = GameObject.FindGameObjectWithTag("Player");
         if (playerPos != null) dir = playerPos.transform.position - transform.position;
         else dir = Vector3.back;
+        dir.Normalize();
     }
-    // Update is called once per frame
+    // Update is called once per framew
     void Update()
     {
-        dir.Normalize();
-        transform.Translate(dir * speed * Time.deltaTime);
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player")
+        if (gameObject.tag == "Boss")
         {
-            Destroy(playerPos);
-            Destroy(collision.gameObject);
+            transform.Translate(Vector3.back * speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(dir * speed * Time.deltaTime);
         }
     }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Player")
+    //    {
+    //        Destroy(playerPos);
+    //        Destroy(collision.gameObject);
+    //    }
+    //}
     private void OnBecameInvisible()
     {
         Destroy(gameObject);

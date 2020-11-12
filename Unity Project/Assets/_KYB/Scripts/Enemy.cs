@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
             timer = 0;
             GameObject bullet = Instantiate(enemyBullet);
             bullet.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+            bullet.GetComponent<EnemyBullet>().initBullet();
         }
     }
 

@@ -24,8 +24,11 @@ public class Bullet : MonoBehaviour
     //유니티 내부에는  On으로 시작되는 함수는 전부 이벤트 함수들이다
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag != "Player")
+        {
             Destroy(gameObject);
             Destroy(collision.gameObject);
+        }
     }
     private void OnBecameInvisible()
     {
